@@ -1,7 +1,7 @@
 <template>
     <Toast />
 
-    <BaseCard v-bind="currentElement" class="center" :canFlip="canFlip"></BaseCard>
+    <BaseCard v-bind="currentElement" class="center" :canFlip="canFlip" :deleteIcon="deleteIcon"></BaseCard>
     <div class="center">
         <InputText type="text" v-model="value" class="mid" />
         <Button label="Check " @click="checkAnswer"></Button>
@@ -23,7 +23,8 @@ export default {
             cardStore: useCardStore(),
             value: '',
             currentElement: {},
-            canFlip: true
+            canFlip: true,
+            deleteIcon: false
         };
     },
     mounted() {

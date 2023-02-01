@@ -4,7 +4,7 @@
             <div class="card" @click="cardOne == 'start' && canFlip ? (cardOne = 'flipped') : (cardOne = 'start')" v-bind:class="{ flipme: cardOne == 'flipped' }">
                 <div class="card__face card__face--front">
                     {{ front }}
-                    <Button class="pi pi-trash button" @click="onClick"></Button>
+                    <Button class="pi pi-trash button" @click="onClick" v-if="deleteIcon"></Button>
                 </div>
                 <div class="card__face card__face--back">
                     {{ back }}
@@ -22,6 +22,10 @@ export default {
         back: String,
         id: Number,
         canFlip: {
+            type: Boolean,
+            default: true
+        },
+        deleteIcon: {
             type: Boolean,
             default: true
         }
