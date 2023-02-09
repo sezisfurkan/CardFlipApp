@@ -2,12 +2,12 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: 'AIzaSyAf3zRDPDP8G8LHGCnYXt35HOZAU-H5c7A',
-    authDomain: 'cardflipapp-2655f.firebaseapp.com',
-    projectId: 'cardflipapp-2655f',
-    storageBucket: 'cardflipapp-2655f.appspot.com',
-    messagingSenderId: '158265750939',
-    appId: '1:158265750939:web:f8d1ddc7a79640c0e79d3e'
+    apiKey: import.meta.env.VITE_API_KEY,
+    authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_MESSAGINGSENDER_ID,
+    appId: import.meta.env.VITE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);
