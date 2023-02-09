@@ -15,12 +15,11 @@
 </template>
 
 <script>
-import { useCardStore } from '../stores/CardStore';
 export default {
     props: {
         front: String,
         back: String,
-        id: Number,
+        id: String,
         canFlip: {
             type: Boolean,
             default: true
@@ -33,8 +32,7 @@ export default {
 
     data() {
         return {
-            cardOne: 'start',
-            useCard: useCardStore()
+            cardOne: 'start'
         };
     },
 

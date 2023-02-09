@@ -10,7 +10,7 @@
     <Button label="Create " @click="CreateCard"></Button>
 
     <div class="grid">
-        <div class="col" v-for="card in cardStore.cards" :key="card.id">
+        <div class="col" v-for="card in cards" :key="card.id">
             <base-card @remove="removeCard" :front="card.front" :back="card.back" :id="card.id"></base-card>
         </div>
     </div>
@@ -18,35 +18,34 @@
 
 <script>
 import BaseCard from '../components/BaseCard.vue';
-import { useCardStore } from '../stores/CardStore';
-
+import { getCards, createCard, deleteCard } from '../service/cardservice';
 export default {
     components: { BaseCard },
     data() {
         return {
+            cards: [],
             front: '',
-            back: '',
-
-            cardStore: useCardStore()
+            back: ''
         };
     },
     methods: {
-        CreateCard() {
-            // this.words.push({
-            //     front: this.front,
-            //     back: this.back,
-            //     id: Date.now()
-            // });
-            this.cardStore.addCard({
+        async CreateCard() {
+            const card = {
                 front: this.front,
-                back: this.back,
-                id: Date.now()
-            });
+                back: this.back
+            };
+            createCard(card);
+            this.cards = await getCards();
+            console.log(this.cards);
         },
 
-        removeCard(id) {
-            this.cardStore.removeCard(id);
+        async removeCard(id) {
+            deleteCard(id);
+            this.cards = await getCards();
         }
+    },
+    async mounted() {
+        this.cards = await getCards();
     }
 };
 </script>
