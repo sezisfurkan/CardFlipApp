@@ -1,7 +1,7 @@
-# Vue 3 + Vite
+vocabulary flip app!
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+With this app, you can learn new words in any language. Simply add the word you want to learn on the front side of the card, and write its translation on the back. You can organize your words into categories based on their levels making it easier to study and remember them.
 
-## Recommended IDE Setup
+app also features a challenging game where you can practice the words you've learned. The game displays a word and you need to type its translation in English. If you get it right, the card flips over to reveal the translation and you earn points!
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+In addition, the app includes a category page where you can group your words based on their levels and access them for practice.
