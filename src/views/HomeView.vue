@@ -49,6 +49,8 @@ export default {
             };
             createCard(card);
             this.cards = await getCards();
+            this.front = '';
+            this.back = '';
         },
 
         async removeCard(id) {

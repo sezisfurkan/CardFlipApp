@@ -23,7 +23,7 @@ export default {
                 },
                 {
                     label: 'Game',
-                    icon: 'pi pi-gamepad',
+                    icon: 'pi pi-tablet',
                     to: '/game'
                 }
             ]
