@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="scene scene--card">
-            <div class="card" @click="cardOne == 'start' && canFlip ? (cardOne = 'flipped') : (cardOne = 'start')" v-bind:class="{ flipme: cardOne == 'flipped' }">
+            <div class="card" @click="flipCard" :class="{ flipme: cardOne == 'flipped' }">
                 <div class="card__face card__face--front">
                     {{ front }}
                     <Button class="pi pi-trash button" @click="onClick" v-if="deleteIcon"></Button>
@@ -39,6 +39,11 @@ export default {
     methods: {
         onClick() {
             this.$emit('remove', this.id);
+        },
+        flipCard() {
+            if (this.canFlip) {
+                this.cardOne = this.cardOne === 'start' ? 'flipped' : 'start';
+            }
         }
     }
 };
@@ -83,7 +88,6 @@ export default {
     transform: rotateY(180deg);
 }
 
-/* this style is applied when the card is clicked */
 .flipme {
     transform: rotateY(180deg);
 }

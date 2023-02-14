@@ -12,11 +12,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.router {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 100px;
-}
-</style>
+<style scoped></style>

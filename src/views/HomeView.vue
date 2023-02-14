@@ -1,13 +1,21 @@
 <template>
+    <br />
     <div>
-        <span>front:</span>
+        <span>Front:</span>
         <InputText type="text" v-model="front" required />
     </div>
+    <br />
     <div>
-        <span>back:</span>
+        <span>Back: </span>
         <InputText type="text" v-model="back" required />
     </div>
-    <Button label="Create " @click="CreateCard"></Button>
+    <br />
+    <div>
+        <span>Level:</span>
+        <Dropdown v-model="level" :options="levels" placeholder="Select a Level" class="mt-2 pr-2" />
+    </div>
+    <br />
+    <div><Button label="Create " @click="CreateCard"></Button></div>
 
     <div class="grid">
         <div class="col" v-for="card in cards" :key="card.id">
@@ -25,18 +33,22 @@ export default {
         return {
             cards: [],
             front: '',
-            back: ''
+            back: '',
+            level: '',
+
+            levels: ['A LEVEL', 'B LEVEL', 'C LEVEL']
         };
     },
     methods: {
         async CreateCard() {
             const card = {
                 front: this.front,
-                back: this.back
+                back: this.back,
+                newDate: new Date(),
+                level: this.level
             };
             createCard(card);
             this.cards = await getCards();
-            console.log(this.cards);
         },
 
         async removeCard(id) {
