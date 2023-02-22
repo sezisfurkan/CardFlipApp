@@ -2,9 +2,6 @@
     <Menubar :model="menuItems">
         <template #end>
             <h1 class="text-green-600 text-2xl font-normal m-0 p-0">Vue Js Vocabulary Flip App</h1>
-            <div v-if="authStore.user">
-                <p>{{ authStore.user }}</p>
-            </div>
         </template>
     </Menubar>
 </template>
