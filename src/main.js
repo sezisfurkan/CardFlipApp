@@ -22,6 +22,7 @@ import Menubar from 'primevue/menubar';
 const app = createApp(App);
 
 app.use(PrimeVue);
+
 app.use(router);
 app.use(createPinia());
 app.use(ToastService);

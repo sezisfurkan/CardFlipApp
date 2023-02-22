@@ -1,5 +1,5 @@
 import { db } from '../firebase/index';
-import { getDocs, collection, addDoc, deleteDoc, doc, orderBy, query } from 'firebase/firestore';
+import { getDocs, collection, addDoc, deleteDoc, doc, orderBy, query, where } from 'firebase/firestore';
 
 async function getCards() {
     const cardsCollection = collection(db, 'Cards');
@@ -18,4 +18,19 @@ async function deleteCard(id) {
     await deleteDoc(doc(db, 'Cards', id));
 }
 
-export { getCards, createCard, deleteCard };
+async function queryCards(searchTerm) {
+    const cardsCollection = collection(db, 'Cards');
+    let q = cardsCollection;
+    if (searchTerm !== 'ALL') {
+        q = query(cardsCollection, where('level', '==', searchTerm));
+    } else {
+        q = query(cardsCollection, orderBy('newDate'));
+    }
+    const cardsSnapshot = await getDocs(q);
+    const cardsList = cardsSnapshot.docs.map((doc) => {
+        return { id: doc.id, ...doc.data() };
+    });
+    return cardsList;
+}
+
+export { getCards, createCard, deleteCard, queryCards };

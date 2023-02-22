@@ -27,6 +27,7 @@
 <script>
 import BaseCard from '../components/BaseCard.vue';
 import { getCards, createCard, deleteCard } from '../service/cardservice';
+
 export default {
     components: { BaseCard },
     data() {
@@ -35,7 +36,6 @@ export default {
             front: '',
             back: '',
             level: '',
-
             levels: ['A LEVEL', 'B LEVEL', 'C LEVEL']
         };
     },

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import GameView from '../views/GameView.vue';
 import CategoryView from '../views/CategoryView.vue';
+import UserAuth from '../views/UserAuth.vue';
 
 const routes = [
     {
@@ -18,6 +19,11 @@ const routes = [
         path: '/categories',
         name: 'Categories',
         component: CategoryView
+    },
+    {
+        path: '/auth',
+        name: 'Auth',
+        component: UserAuth
     }
 ];
 

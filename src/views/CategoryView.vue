@@ -3,7 +3,7 @@
         <Dropdown v-model="selectedLevel" :options="levels" placeholder="Select a Level" class="mt-2 pr-2" />
 
         <div class="grid">
-            <div class="col" v-for="card in cards" :key="card.id" v-show="showCard(card)">
+            <div class="col" v-for="card in filteredCards" :key="card.id">
                 <base-card :front="card.front" :back="card.back" :id="card.id" :deleteIcon="deleteIcon"></base-card>
             </div>
         </div>
@@ -12,7 +12,8 @@
 
 <script>
 import BaseCard from '../components/BaseCard.vue';
-import { getCards } from '../service/cardservice';
+import { queryCards } from '../service/cardservice';
+
 export default {
     components: { BaseCard },
     data() {
@@ -20,16 +21,26 @@ export default {
             selectedLevel: 'ALL',
             levels: ['ALL', 'A LEVEL', 'B LEVEL', 'C LEVEL'],
             cards: [],
+            filteredCards: [],
             deleteIcon: false
         };
     },
     methods: {
-        showCard(card) {
-            return this.selectedLevel === 'ALL' || card.level === this.selectedLevel;
+        async filterCards() {
+            const filteredCards = await queryCards(this.selectedLevel);
+            return filteredCards;
         }
     },
     async mounted() {
-        this.cards = await getCards();
+        const filteredCards = await this.filterCards();
+        this.filteredCards = filteredCards;
+    },
+    watch: {
+        selectedLevel() {
+            this.filterCards().then((filteredCards) => {
+                this.filteredCards = filteredCards;
+            });
+        }
     }
 };
 </script>
