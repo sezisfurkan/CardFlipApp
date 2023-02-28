@@ -13,7 +13,7 @@
 <script>
 import BaseCard from '../components/BaseCard.vue';
 import { queryCards } from '../service/cardservice';
-
+import { useAuthStore } from '../store/auth';
 export default {
     components: { BaseCard },
     data() {
@@ -22,12 +22,14 @@ export default {
             levels: ['ALL', 'A LEVEL', 'B LEVEL', 'C LEVEL'],
             cards: [],
             filteredCards: [],
-            deleteIcon: false
+            deleteIcon: false,
+            authStore: useAuthStore()
         };
     },
     methods: {
         async filterCards() {
-            const filteredCards = await queryCards(this.selectedLevel);
+            const userId = this.authStore.user.uid;
+            const filteredCards = await queryCards(this.selectedLevel, userId);
             return filteredCards;
         }
     },

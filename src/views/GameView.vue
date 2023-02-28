@@ -35,6 +35,7 @@
 import BaseCard from '../components/BaseCard.vue';
 import Toast from 'primevue/toast';
 import { getCards } from '../service/cardservice';
+import { useAuthStore } from '../store/auth';
 
 export default {
     components: { BaseCard, Toast },
@@ -51,7 +52,8 @@ export default {
             nextCard: false,
             blockedDocument: false,
             check: false,
-            length: 0
+            length: 0,
+            authStore: useAuthStore()
         };
     },
 
@@ -111,7 +113,7 @@ export default {
         }
     },
     async mounted() {
-        this.cards = await getCards();
+        this.cards = await getCards(this.authStore.user.uid);
         this.currentElement = this.randomElement();
         this.isMounted = true;
         this.length = this.cards.length;

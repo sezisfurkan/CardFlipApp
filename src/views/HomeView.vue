@@ -27,6 +27,7 @@
 <script>
 import BaseCard from '../components/BaseCard.vue';
 import { getCards, createCard, deleteCard } from '../service/cardservice';
+import { useAuthStore } from '../store/auth';
 
 export default {
     components: { BaseCard },
@@ -37,7 +38,7 @@ export default {
             back: '',
             level: '',
             levels: ['A LEVEL', 'B LEVEL', 'C LEVEL'],
-            userId: ''
+            authStore: useAuthStore()
         };
     },
     methods: {
@@ -46,21 +47,24 @@ export default {
                 front: this.front,
                 back: this.back,
                 newDate: new Date(),
-                level: this.level
+                level: this.level,
+                userId: this.authStore.user.uid
             };
             createCard(card);
-            this.cards = await getCards();
+            this.cards = await getCards(this.authStore.user.uid);
             this.front = '';
             this.back = '';
         },
 
         async removeCard(id) {
             deleteCard(id);
-            this.cards = await getCards();
+            this.cards = await getCards(this.authStore.user.uid);
         }
     },
     async mounted() {
-        this.cards = await getCards();
+        if (this.authStore.user) {
+            this.cards = await getCards(this.authStore.user.uid);
+        }
     }
 };
 </script>
