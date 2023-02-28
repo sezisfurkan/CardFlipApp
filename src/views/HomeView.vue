@@ -36,7 +36,8 @@ export default {
             front: '',
             back: '',
             level: '',
-            levels: ['A LEVEL', 'B LEVEL', 'C LEVEL']
+            levels: ['A LEVEL', 'B LEVEL', 'C LEVEL'],
+            userId: ''
         };
     },
     methods: {

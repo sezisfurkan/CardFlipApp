@@ -8,11 +8,13 @@
 
 <script>
 import { useAuthStore } from '../store/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export default {
     data() {
         return {
-            authStore: useAuthStore()
+            authStore: useAuthStore(),
+            isLoggedIn: false
         };
     },
     computed: {
@@ -34,14 +36,34 @@ export default {
                     to: '/game'
                 },
                 {
-                    label: this.authStore.user ? this.authStore.user : 'Login',
+                    label: this.authStore.user ? this.authStore.user.email : 'Login',
                     icon: 'pi pi-user',
                     to: '/auth'
                 }
             ];
+            if (this.isLoggedIn) {
+                items.push({
+                    label: 'Logout',
+                    icon: 'pi pi-sign-out',
+                    command: () => {
+                        this.authStore.signOut();
+                        this.$router.push('/');
+                    }
+                });
+            }
 
             return items;
         }
+    },
+    mounted() {
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                this.isLoggedIn = true;
+            } else {
+                this.isLoggedIn = false;
+            }
+        });
     }
 };
 </script>

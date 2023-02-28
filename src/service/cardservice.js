@@ -1,5 +1,6 @@
 import { db } from '../firebase/index';
 import { getDocs, collection, addDoc, deleteDoc, doc, orderBy, query, where } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 async function getCards() {
     const cardsCollection = collection(db, 'Cards');
@@ -10,9 +11,9 @@ async function getCards() {
     });
     return cardsList;
 }
+
 async function createCard(card) {
     const docRef = await addDoc(collection(db, 'Cards'), card);
-    console.log('Document written with ID: ', docRef.id);
 }
 async function deleteCard(id) {
     await deleteDoc(doc(db, 'Cards', id));
