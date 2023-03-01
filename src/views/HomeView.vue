@@ -47,17 +47,16 @@ export default {
                 front: this.front,
                 back: this.back,
                 newDate: new Date(),
-                level: this.level,
-                userId: this.authStore.user.uid
+                level: this.level
             };
-            createCard(card);
+            createCard(this.authStore.user.uid, card);
             this.cards = await getCards(this.authStore.user.uid);
             this.front = '';
             this.back = '';
         },
 
         async removeCard(id) {
-            deleteCard(id);
+            deleteCard(this.authStore.user.uid, id);
             this.cards = await getCards(this.authStore.user.uid);
         }
     },

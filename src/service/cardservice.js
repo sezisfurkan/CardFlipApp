@@ -1,18 +1,10 @@
 import { db } from '../firebase/index';
 import { getDocs, collection, addDoc, deleteDoc, doc, orderBy, query, where } from 'firebase/firestore';
 
-// async function getCards() {
-//     const cardsCollection = collection(db, 'Cards');
-//     const q = query(cardsCollection, orderBy('newDate'));
-//     const cardsSnapshot = await getDocs(q);
-//     const cardsList = cardsSnapshot.docs.map((doc) => {
-//         return { id: doc.id, ...doc.data() };
-//     });
-//     return cardsList;
-// }
 async function getCards(userId) {
-    const cardsCollection = collection(db, 'Cards');
-    const q = query(cardsCollection, where('userId', '==', userId), orderBy('newDate'));
+    const userDocRef = doc(db, 'Users', userId);
+    const cardsCollectionRef = collection(userDocRef, 'Cards');
+    const q = query(cardsCollectionRef, orderBy('newDate'));
     const cardsSnapshot = await getDocs(q);
     const cardsList = cardsSnapshot.docs.map((doc) => {
         return { id: doc.id, ...doc.data() };
@@ -20,21 +12,27 @@ async function getCards(userId) {
     return cardsList;
 }
 
-async function createCard(card) {
-    const docRef = await addDoc(collection(db, 'Cards'), card);
+async function createCard(userId, card) {
+    const userDocRef = doc(db, 'Users', userId);
+    const cardsCollectionRef = collection(userDocRef, 'Cards');
+    const docRef = await addDoc(cardsCollectionRef, card);
+    return docRef;
 }
 
-async function deleteCard(id) {
-    await deleteDoc(doc(db, 'Cards', id));
+async function deleteCard(userId, cardId) {
+    const userDocRef = doc(db, 'Users', userId);
+    const cardDocRef = doc(userDocRef, 'Cards', cardId);
+    await deleteDoc(cardDocRef);
 }
 
 async function queryCards(searchTerm, userId) {
-    const cardsCollection = collection(db, 'Cards');
-    let q = cardsCollection;
+    const userDocRef = doc(db, 'Users', userId);
+    const cardsCollectionRef = collection(userDocRef, 'Cards');
+    let q = cardsCollectionRef;
     if (searchTerm !== 'ALL') {
-        q = query(cardsCollection, where('level', '==', searchTerm), where('userId', '==', userId));
+        q = query(cardsCollectionRef, where('level', '==', searchTerm), orderBy('newDate'));
     } else {
-        q = query(cardsCollection, where('userId', '==', userId), orderBy('newDate'));
+        q = query(cardsCollectionRef, orderBy('newDate'));
     }
     const cardsSnapshot = await getDocs(q);
     const cardsList = cardsSnapshot.docs.map((doc) => {

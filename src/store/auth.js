@@ -2,17 +2,6 @@ import { defineStore } from 'pinia';
 
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
-// const firebaseConfig = {
-//     apiKey: import.meta.env.VITE_API_KEY,
-//     authDomain: import.meta.env.VITE_AUTH_DOMAIN,
-//     projectId: import.meta.env.VITE_PROJECT_ID,
-//     storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
-//     messagingSenderId: import.meta.env.VITE_MESSAGINGSENDER_ID,
-//     appId: import.meta.env.VITE_APP_ID
-// };
-
-// const firebaseApp = initializeApp(firebaseConfig);
-
 export const useAuthStore = defineStore('auth', {
     state: () => {
         return { email: '', password: '', errorMsg: '', user: null, errorMsg: '' };
@@ -22,12 +11,15 @@ export const useAuthStore = defineStore('auth', {
             createUserWithEmailAndPassword(getAuth(), this.email, this.password);
         },
         async signInWithGoogle() {
-            const provider = new GoogleAuthProvider();
-            await signInWithPopup(getAuth(), provider);
-            const auth = getAuth();
-            const userFb = auth.currentUser;
-            if (userFb) {
-                this.user = userFb.email;
+            try {
+                const provider = new GoogleAuthProvider();
+                const auth = getAuth();
+                const result = await signInWithPopup(auth, provider);
+                if (result.user) {
+                    this.user = result.user;
+                }
+            } catch (error) {
+                console.log(error);
             }
         },
         async login() {

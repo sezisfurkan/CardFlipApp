@@ -1,19 +1,26 @@
 <template>
-    <div class="mt-3 ml-2">
-        <label for="email">E-mail</label>
-        <InputText id="email" name="email" v-model="authStore.email" class="ml-2 mb-2" />
+    <div class="text-center mb-3 mt-6">
+        <h2 class="font-bold mt-4 mb-5">Welcome You can create your account if you have account you can sign in</h2>
     </div>
 
-    <div class="ml-2">
-        <label for="password">Password:</label>
-        <InputText id="password" type="password" v-model="authStore.password" class="ml-2" />
+    <div class="text-center">
+        <div class="mb-2">
+            <label for="email" class="font-bold pr-3"> E-mail:</label>
+            <InputText id="email" name="email" v-model="authStore.email" class="ml-2" />
+        </div>
+        <div class="mb-2">
+            <label for="password" class="font-bold">Password:</label>
+            <InputText id="password" type="password" v-model="authStore.password" class="ml-2" />
+        </div>
     </div>
 
-    <p v-if="authStore.errorMsg !== ''">{{ authStore.errorMsg }}</p>
-    <Button class="mt-4 ml-2" @click="signIn">Sign In</Button>
-    <Button class="mt-4 ml-2" @click="registerUser">Register</Button>
-    <Button class="mt-4 ml-2" @click="signInWithGoogle">Sign In Google</Button>
-    <p>User ID: {{ userId }}</p>
+    <p v-if="authStore.errorMsg !== ''" class="mt-2 text-danger text-center">{{ authStore.errorMsg }}</p>
+
+    <div class="text-center mt-4">
+        <Button class="mr-2" @click="signIn">Sign In</Button>
+        <Button class="mr-2" @click="registerUser">Register</Button>
+        <Button @click="signInWithGoogle">Sign In Google</Button>
+    </div>
 </template>
 
 <script>
