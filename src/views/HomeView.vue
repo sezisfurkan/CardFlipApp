@@ -12,7 +12,7 @@
     <br />
     <div>
         <span>Level:</span>
-        <Dropdown v-model="level" :options="levels" placeholder="Select a Level" class="mt-2 pr-2" />
+        <InputText type="text" v-model="categoryName"></InputText>
     </div>
     <br />
     <div><Button label="Create " @click="CreateCard"></Button></div>
@@ -36,8 +36,7 @@ export default {
             cards: [],
             front: '',
             back: '',
-            level: '',
-            levels: ['A LEVEL', 'B LEVEL', 'C LEVEL'],
+            categoryName: '',
             authStore: useAuthStore()
         };
     },
@@ -47,7 +46,7 @@ export default {
                 front: this.front,
                 back: this.back,
                 newDate: new Date(),
-                level: this.level
+                categoryName: this.categoryName
             };
             createCard(this.authStore.user.uid, card);
             this.cards = await getCards(this.authStore.user.uid);

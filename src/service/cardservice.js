@@ -30,7 +30,7 @@ async function queryCards(searchTerm, userId) {
     const cardsCollectionRef = collection(userDocRef, 'Cards');
     let q = cardsCollectionRef;
     if (searchTerm !== 'ALL') {
-        q = query(cardsCollectionRef, where('level', '==', searchTerm), orderBy('newDate'));
+        q = query(cardsCollectionRef, where('categoryName', '==', searchTerm), orderBy('newDate'));
     } else {
         q = query(cardsCollectionRef, orderBy('newDate'));
     }

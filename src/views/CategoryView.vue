@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Dropdown v-model="selectedLevel" :options="levels" placeholder="Select a Level" class="mt-2 pr-2" />
+        <Dropdown v-model="selectedCategory" :options="categoryOptions" placeholder="Select a Level" class="mt-2 pr-2" />
 
         <div class="grid">
             <div class="col" v-for="card in filteredCards" :key="card.id">
@@ -14,12 +14,13 @@
 import BaseCard from '../components/BaseCard.vue';
 import { queryCards } from '../service/cardservice';
 import { useAuthStore } from '../store/auth';
+
 export default {
     components: { BaseCard },
     data() {
         return {
-            selectedLevel: 'ALL',
-            levels: ['ALL', 'A LEVEL', 'B LEVEL', 'C LEVEL'],
+            selectedCategory: 'ALL',
+            categoryOptions: [],
             cards: [],
             filteredCards: [],
             deleteIcon: false,
@@ -28,20 +29,21 @@ export default {
     },
     methods: {
         async filterCards() {
-            const userId = this.authStore.user.uid;
-            const filteredCards = await queryCards(this.selectedLevel, userId);
-            return filteredCards;
+            const filteredCardss = await queryCards(this.selectedCategory, this.authStore.user.uid);
+            this.filteredCards = filteredCardss;
         }
     },
     async mounted() {
-        const filteredCards = await this.filterCards();
-        this.filteredCards = filteredCards;
+        const q = await queryCards('ALL', this.authStore.user.uid);
+        const categories = new Set(q.map((card) => card.categoryName));
+        this.categoryOptions = ['ALL', ...categories];
+        console.log('Category options:', this.categoryOptions);
+
+        this.filteredCards = q;
     },
     watch: {
-        selectedLevel() {
-            this.filterCards().then((filteredCards) => {
-                this.filteredCards = filteredCards;
-            });
+        selectedCategory() {
+            this.filterCards();
         }
     }
 };
